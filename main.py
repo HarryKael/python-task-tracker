@@ -1,43 +1,62 @@
-def list_tasks(status:str = None):
-    if status:
-        match(status.lower()):
-            case 'done':
+#! /usr/local/bin/python3
+import sys
+from datetime import datetime
+from src.json_utilities import JsonUtilitiesRead, JsonUtilitiesWrite
+
+def functionality(method:str, id:int = None, value:str = None):
+    read = JsonUtilitiesRead()
+    write = JsonUtilitiesWrite()
+    if id:
+        match(method.lower()):
+            case 'delete':
                 pass
-            case 'in-progress':
+            case 'mark-in-progress':
                 pass
-            case 'todo':
+            case 'mark-done':
                 pass
+            case 'update':
+                if value:
+                    pass
+    elif value:
+        match(method.lower()):
+            case 'add':
+                data:dict = {
+                    'id': None,
+                    'description': value,
+                    'status': 'ToDo',
+                    'created_at': str(datetime.now()),
+                    'updated_at': None,
+                }
+                if read.add_one(data):
+                    # ! Save the data
+                    write.save_data(read.data)
+            case 'list':
+                for d in read.items:
+                    print(d)
     else:
-        pass
+        if method.lower() == 'list':
+            for d in read.items:
+                print(d)
+
+    # ! Close file
+    write.close_file()
 
 
-def run_method(method:str, id:int = None, value:str = None):
-    match(method.lower()):
-        case 'add':
-            pass
-        case 'update':
-            pass
-        case 'mark-in-progress':
-            pass
-        case 'mark-done':
-            pass
-        case 'delete':
-            pass
-        case 'list':
-            if value:
-                list_tasks(status=value)
 
 def main():
-    # The application should run from the command line, accept user actions and inputs as arguments, and store the tasks in a JSON file. The user should be able to:
+    arguments = sys.argv
+    id = None
+    method = None
+    value = None
+    if len(arguments) >= 4:
+        method = arguments[1]
+        id = int(arguments[2])
+        value = arguments[3]
+    elif len(arguments) <= 3:
+        method = arguments[1]
+        try:
+            value = arguments[2]
+        except:pass
+    functionality(method, id, value)
 
-    # Add, Update, and Delete tasks
-    # Mark a task as in progress or done
-    # List all tasks
-    # List all tasks that are done
-    # List all tasks that are not done
-    # List all tasks that are in progress
-    
-    pass
-
-if __name__ == '__main__':
-    main()
+main()
