@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 class JsonUtilitiesRead():
-    file_path = '/Users/kael/Documents/Harry/Projects/Python/Task Tracker/data.json'
+    file_path = '/Users/kael/Documents/Harry/Projects/Python/TaskTracker/data.json'
     f = None
     data:dict = {}
     items = None
@@ -54,21 +54,22 @@ class JsonUtilitiesRead():
         if len(self.items):
             self.next_id = int(self.items[-1][0]) + 1
 
-    def __init__(self) -> None:
-        try:
-            with open(self.file_path, 'r') as f:
-                data = f.read()
-                if data:
-                    self.data = json.loads(data)
-                f.close()
-        except Exception as e:
-            print(f'------- Error:  {e}')
-            with open(self.file_path, 'x') as f:
-                f.close()
+    def __init__(self, test:str = 'No') -> None:
+        if test == 'No':
+            try:
+                with open(self.file_path, 'r') as f:
+                    data = f.read()
+                    if data:
+                        self.data = json.loads(data)
+                    f.close()
+            except Exception as e:
+                print(f'------- Error:  {e}')
+                with open(self.file_path, 'x') as f:
+                    f.close()
         self.get_next_id()
 
 class JsonUtilitiesWrite():
-    file_path = '/Users/kael/Documents/Harry/Projects/Python/Task Tracker/data.json'
+    file_path = '/Users/kael/Documents/Harry/Projects/Python/TaskTracker/data.json'
     f = None
 
     def before_writing(self):

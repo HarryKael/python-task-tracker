@@ -46,6 +46,13 @@ def functionality(method:str, id:int = None, value:str = None):
                 for d in read.items:
                     if d[1]['status'].lower() == value.replace('-', ' ').lower():
                         show_task(d)
+            case 'path_file':
+                try:
+                    with open(value, 'x') as f:
+                        f.close()
+                    print('The file has been created')
+                except Exception as e:
+                    print(f'There has been an error creating the file\nError: {e}')
     else:
         if method.lower() == 'list':
             print(f'ID | Description | Status | CreatedAt | UpdateAt')
@@ -55,8 +62,6 @@ def functionality(method:str, id:int = None, value:str = None):
     # ! Close file
     if write.f:
         write.close_file()
-
-
 
 def main():
     arguments = sys.argv
