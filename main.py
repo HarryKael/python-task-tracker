@@ -3,20 +3,31 @@ import sys
 from datetime import datetime
 from src.json_utilities import JsonUtilitiesRead, JsonUtilitiesWrite
 
+def show_task(data):
+    print(f'{data[1]['id']} | {data[1]['description']} | {data[1]['status']} | {data[1]['created_at']} | {data[1]['updated_at']}')
+
 def functionality(method:str, id:int = None, value:str = None):
     read = JsonUtilitiesRead()
     write = JsonUtilitiesWrite()
     if id:
         match(method.lower()):
             case 'delete':
-                pass
+                if read.delete_one(id):
+                    # ! Save the data
+                    write.save_data(read.data)
             case 'mark-in-progress':
-                pass
+                if read.change_status(id, 'In Progress'):
+                    # ! Save the data
+                    write.save_data(read.data)
             case 'mark-done':
-                pass
+                if read.change_status(id, 'Done'):
+                    # ! Save the data
+                    write.save_data(read.data)
             case 'update':
                 if value:
-                    pass
+                    if read.update_one(id, value):
+                        # ! Save the data
+                        write.save_data(read.data)
     elif value:
         match(method.lower()):
             case 'add':
@@ -31,15 +42,19 @@ def functionality(method:str, id:int = None, value:str = None):
                     # ! Save the data
                     write.save_data(read.data)
             case 'list':
+                print(f'ID | Description | Status | CreatedAt | UpdateAt')
                 for d in read.items:
-                    print(d)
+                    if d[1]['status'].lower() == value.replace('-', ' ').lower():
+                        show_task(d)
     else:
         if method.lower() == 'list':
+            print(f'ID | Description | Status | CreatedAt | UpdateAt')
             for d in read.items:
-                print(d)
+                show_task(d)
 
     # ! Close file
-    write.close_file()
+    if write.f:
+        write.close_file()
 
 
 
@@ -50,13 +65,18 @@ def main():
     value = None
     if len(arguments) >= 4:
         method = arguments[1]
-        id = int(arguments[2])
+        id = arguments[2]
         value = arguments[3]
     elif len(arguments) <= 3:
         method = arguments[1]
         try:
-            value = arguments[2]
-        except:pass
+            if arguments[2]:
+                try:
+                    int(arguments[2])
+                    id = arguments[2]
+                except:
+                    value = arguments[2]
+        except IndexError:pass
     functionality(method, id, value)
 
 main()
