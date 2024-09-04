@@ -1,12 +1,14 @@
-**TASK TRACKER**
+# TASK TRACKER
 
-* DESCRIPTION *
+## DESCRIPTION
 
-* CONFIGURATION *
-** SET ALIAS **
+## SET UP
+
 First you have to get the path of the file called "task-cli.py"
 Then you must set the alias in you terminal by introducing the command:
-"alias task-cli="<<path_file>>"
+`alias task-cli="<<path_file>>`
 That's should set it.
 
-** SET THE data.json file **
+## CONFIGURATION
+
+## SET THE data.json file
