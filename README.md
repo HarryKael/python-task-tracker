@@ -15,8 +15,8 @@ After the alias has been setted, you have to run this command:
 
 ## USAGE COMMANDS
 
-* Change or set the new file path: _task-cli set-file-path <<file_path>>_
-* Create a task: _task-cli add "<<task_description>>_
-* List tasks: _task-cli list <<optional | task_status>>_
-* Update a task: _task-cli update <<task_id>> <<new_task_description>>_
-* Delete a task: _task-cli delete <<task_id>>_
+* Change or set the new file path: `task-cli set-file-path <<file_path>>`
+* Create a task:  `task-cli add "<<task_description>>`
+* List tasks: `task-cli list <<optional | task_status>>`
+* Update a task:  `task-cli update <<task_id>> <<new_task_description>>`
+* Delete a task: `task-cli delete <<task_id>>`
