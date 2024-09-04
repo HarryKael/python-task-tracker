@@ -1,8 +1,13 @@
 import json
 from datetime import datetime
+import os
+
+def get_current_dir() -> str:
+    return os.path.dirname(os.path.realpath(__file__))
 
 class JsonUtilitiesRead():
-    file_path = '/Users/kael/Documents/Harry/Projects/Python/TaskTracker/data.json'
+    file_path = ''
+    current_dir = get_current_dir()
     f = None
     data:dict = {}
     items = None
@@ -54,7 +59,15 @@ class JsonUtilitiesRead():
         if len(self.items):
             self.next_id = int(self.items[-1][0]) + 1
 
+    def get_file_path(self) -> str | None:
+        with open(f'{self.current_dir}/file_path.txt', 'r') as f:
+            self.file_path = f.read().strip()
+            f.close()
+        if not len(self.file_path) > 0:
+            raise Exception('You haven\'t setted the file path for the tasks')
+
     def __init__(self, test:str = 'No') -> None:
+        self.get_file_path()
         if test == 'No':
             try:
                 with open(self.file_path, 'r') as f:
@@ -69,7 +82,8 @@ class JsonUtilitiesRead():
         self.get_next_id()
 
 class JsonUtilitiesWrite():
-    file_path = '/Users/kael/Documents/Harry/Projects/Python/TaskTracker/data.json'
+    file_path = ''
+    current_dir = get_current_dir()
     f = None
 
     def before_writing(self):
@@ -82,3 +96,13 @@ class JsonUtilitiesWrite():
     def close_file(self) -> None:
         if self.f:
             self.f.close()
+
+    def get_file_path(self) -> str | None:
+        with open(f'{self.current_dir}/file_path.txt', 'r') as f:
+            self.file_path = f.read()
+            f.close()
+        if not len(self.file_path) > 0:
+            raise Exception('You haven\'t setted the file path for the tasks')
+    
+    def __init__(self) -> None:
+        self.get_file_path()

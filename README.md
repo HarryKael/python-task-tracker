@@ -4,11 +4,19 @@
 
 ## SET UP
 
-First you have to get the path of the file called "task-cli.py"
-Then you must set the alias in you terminal by introducing the command:
-`alias task-cli="<<path_file>>`
-That's should set it.
+Execute the file called setup.sh
 
 ## CONFIGURATION
 
-## SET THE data.json file
+### Set the path of the data.json file
+
+After the alias has been setted, you have to run this command:
+`task-cli set-file-path "<<file_path>>/data.json"`
+
+## USAGE COMMANDS
+
+* Change or set the new file path: _task-cli set-file-path <<file_path>>_
+* Create a task: _task-cli add "<<task_description>>_
+* List tasks: _task-cli list <<optional | task_status>>_
+* Update a task: _task-cli update <<task_id>> <<new_task_description>>_
+* Delete a task: _task-cli delete <<task_id>>_

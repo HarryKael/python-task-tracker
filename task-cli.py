@@ -1,7 +1,7 @@
 #! /usr/local/bin/python3
 import sys
 from datetime import datetime
-from src.json_utilities import JsonUtilitiesRead, JsonUtilitiesWrite
+from src.json_utilities import JsonUtilitiesRead, JsonUtilitiesWrite, get_current_dir
 
 def show_task(data):
     print(f'{data[1]['id']} | {data[1]['description']} | {data[1]['status']} | {data[1]['created_at']} | {data[1]['updated_at']}')
@@ -46,13 +46,6 @@ def functionality(method:str, id:int = None, value:str = None):
                 for d in read.items:
                     if d[1]['status'].lower() == value.replace('-', ' ').lower():
                         show_task(d)
-            case 'path_file':
-                try:
-                    with open(value, 'x') as f:
-                        f.close()
-                    print('The file has been created')
-                except Exception as e:
-                    print(f'There has been an error creating the file\nError: {e}')
     else:
         if method.lower() == 'list':
             print(f'ID | Description | Status | CreatedAt | UpdateAt')
@@ -82,6 +75,18 @@ def main():
                 except:
                     value = arguments[2]
         except IndexError:pass
-    functionality(method, id, value)
+
+
+    if method == 'set-file-path':
+        current_dir = get_current_dir()
+        try:
+            with open(f'{current_dir}/file_path.txt', 'w') as f:
+                f.write(value)
+                f.close()
+            print('The file has been setted')
+        except Exception as e:
+            print(f'There has been an error creating the file\nError: {e}')
+    else:
+        functionality(method, id, value)
 
 main()
