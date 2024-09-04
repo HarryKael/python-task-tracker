@@ -61,11 +61,19 @@ def main():
     id = None
     method = None
     value = None
+    # ! Getting the information based on the lenght of the arguments
     if len(arguments) >= 4:
         method = arguments[1]
         id = arguments[2]
         value = arguments[3]
     elif len(arguments) <= 3:
+        if len(arguments) == 1:
+            # ! Showing the README.me
+            with open(f'{get_current_dir().replace('src', '')}/README.md', 'r') as f:
+                print(f.read())
+                f.close()
+            sys.exit()
+        # ! Getting the information based on the lenght of the arguments
         method = arguments[1]
         try:
             if arguments[2]:
@@ -76,7 +84,7 @@ def main():
                     value = arguments[2]
         except IndexError:pass
 
-
+    # ! Setting the file path
     if method == 'set-file-path':
         current_dir = get_current_dir()
         try:
@@ -87,6 +95,7 @@ def main():
         except Exception as e:
             print(f'There has been an error creating the file\nError: {e}')
     else:
+        # ! Running the functionalities
         functionality(method, id, value)
 
 main()
