@@ -23,3 +23,6 @@ After the alias has been setted, you have to run this command:
 * List tasks: `task-cli list <<optional | task_status>>`
 * Update a task:  `task-cli update <<task_id>> <<new_task_description>>`
 * Delete a task: `task-cli delete <<task_id>>`
+
+### Project URL
+https://roadmap.sh/projects/task-tracker
