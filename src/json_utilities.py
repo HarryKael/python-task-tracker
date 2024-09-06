@@ -66,19 +66,23 @@ class JsonUtilitiesRead():
         if not len(self.file_path) > 0:
             raise Exception('You haven\'t setted the file path for the tasks')
 
-    def __init__(self, test:str = 'No') -> None:
-        self.get_file_path()
-        if test == 'No':
-            try:
-                with open(self.file_path, 'r') as f:
-                    data = f.read()
-                    if data:
-                        self.data = json.loads(data)
-                    f.close()
-            except Exception as e:
-                print(f'------- Error:  {e}')
-                with open(self.file_path, 'x') as f:
-                    f.close()
+    def __init__(self, path:str = None) -> None:
+        # ? If I introduce the path of the file I want to use.
+        if not path:
+            self.get_file_path()
+        else:
+            self.file_path = path
+        # ! Inicialization
+        try:
+            with open(self.file_path, 'r') as f:
+                data = f.read()
+                if data:
+                    self.data = json.loads(data)
+                f.close()
+        except Exception as e:
+            print(f'------- Error:  {e}')
+            with open(self.file_path, 'x') as f:
+                f.close()
         self.get_next_id()
 
 class JsonUtilitiesWrite():
@@ -104,5 +108,8 @@ class JsonUtilitiesWrite():
         if not len(self.file_path) > 0:
             raise Exception('You haven\'t setted the file path for the tasks')
     
-    def __init__(self) -> None:
-        self.get_file_path()
+    def __init__(self, path:str = None) -> None:
+        if not path:
+            self.get_file_path()
+        else:
+            self.file_path = path

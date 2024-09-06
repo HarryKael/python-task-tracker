@@ -1,7 +1,7 @@
 #! /usr/local/bin/python3
 import sys
 from datetime import datetime
-from src.json_utilities import JsonUtilitiesRead, JsonUtilitiesWrite, get_current_dir
+from src import JsonUtilitiesRead, JsonUtilitiesWrite, get_current_dir
 
 def show_task(data):
     print(f'{data[1]['id']} | {data[1]['description']} | {data[1]['status']} | {data[1]['created_at']} | {data[1]['updated_at']}')

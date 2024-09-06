@@ -1,5 +1,6 @@
 **data.json
 src/path_file.txt
-tests/**
-tests/__init__.py
-tests/test.py
+__pycache__/**
+testdata.json
+test.py
+path.py
