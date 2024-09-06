@@ -2,6 +2,9 @@
 
 ## DESCRIPTION
 
+Python project of backend for tracking tasks, you can add tasks,
+update them, change their status and delete them.
+
 ## SET UP
 
 Execute the file called setup.sh
